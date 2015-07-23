@@ -12,3 +12,9 @@ body {
   font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #333;
 }
+
+.math-function-button {
+    /* Polymer buttons automatically capitalise button text*/
+    /* But math functions look better without this, so lets remove it*/
+    text-transform: none;
+}

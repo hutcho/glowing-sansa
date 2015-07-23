@@ -104,31 +104,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <section data-route="home">
 
               <paper-material elevation="1">
+              <paper-input disabled ></paper-input>
                 <div class="button-row">
-                  <paper-button raised>7</paper-button>
-                  <paper-button raised>8</paper-button>
-                  <paper-button raised>9</paper-button>
-                  <paper-button raised>÷</paper-button>
+                  <paper-button on-click="pushNumber" raised>7</paper-button>
+                  <paper-button on-click="pushNumber" raised>8</paper-button>
+                  <paper-button on-click="pushNumber" raised>9</paper-button>
                 </div>
                 <div class="button-row">
-                  <paper-button raised>4</paper-button>
-                  <paper-button raised>5</paper-button>
-                  <paper-button raised>6</paper-button>
-                  <paper-button raised>×</paper-button>
+                  <paper-button on-click="pushNumber" raised>4</paper-button>
+                  <paper-button on-click="pushNumber" raised>5</paper-button>
+                  <paper-button on-click="pushNumber" raised>6</paper-button>
                 </div>
                 <div class="button-row">
-                  <paper-button raised>1</paper-button>
-                  <paper-button raised>2</paper-button>
-                  <paper-button raised>3</paper-button>
-                  <paper-button raised>-</paper-button>
+                  <paper-button on-click="pushNumber" raised>1</paper-button>
+                  <paper-button on-click="pushNumber" raised>2</paper-button>
+                  <paper-button on-click="pushNumber" raised>3</paper-button>
                 </div>
                 <div class="button-row">
-                  <paper-button raised>0</paper-button>
-                  <paper-button raised>.</paper-button>
-                  <paper-button raised>=</paper-button>
-                  <paper-button raised>+</paper-button>
+                  <paper-button on-click="pushNumber" raised>0</paper-button>
+                  <paper-button disabled raised>.</paper-button>
+                  <paper-button disabled raised>=</paper-button>
                 </div>
               </paper-material>
+
+              <iron-ajax
+                  url="http://calctest.iesim.biz/operations"
+                  handle-as="json"
+                  on-response="handleAvailableOperations"
+                  debounce-duration="300"></iron-ajax>
 
             </section>
 

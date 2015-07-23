@@ -28,31 +28,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // See https://github.com/Polymer/polymer/issues/1381
   window.addEventListener('WebComponentsReady', function() {
     // imports are loaded and elements have been registered
-  });
 
-  // Main area's paper-scroll-header-panel custom condensing transformation of
-  // the appName in the middle-container and the bottom title in the bottom-container.
-  // The appName is moved to top and shrunk on condensing. The bottom sub title
-  // is shrunk to nothing on condensing.
-  addEventListener('paper-header-transform', function(e) {
-    var appName = document.querySelector('.app-name');
-    var middleContainer = document.querySelector('.middle-container');
-    var bottomContainer = document.querySelector('.bottom-container');
-    var detail = e.detail;
-    var heightDiff = detail.height - detail.condensedHeight;
-    var yRatio = Math.min(1, detail.y / heightDiff);
-    var maxMiddleScale = 0.50;  // appName max size when condensed. The smaller the number the smaller the condensed size.
-    var scaleMiddle = Math.max(maxMiddleScale, (heightDiff - detail.y) / (heightDiff / (1-maxMiddleScale))  + maxMiddleScale);
-    var scaleBottom = 1 - yRatio;
-
-    // Move/translate middleContainer
-    Polymer.Base.transform('translate3d(0,' + yRatio * 100 + '%,0)', middleContainer);
-
-    // Scale bottomContainer and bottom sub title to nothing and back
-    Polymer.Base.transform('scale(' + scaleBottom + ') translateZ(0)', bottomContainer);
-
-    // Scale middleContainer appName
-    Polymer.Base.transform('scale(' + scaleMiddle + ') translateZ(0)', appName);
+    // Manually generate the calculator operations request
+    document.querySelector("iron-ajax").generateRequest()
   });
 
   // Close drawer after menu item is selected if drawerPanel is narrow
@@ -62,5 +40,45 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       drawerPanel.closeDrawer();
     }
   };
+
+  // Push a single number into the calculator display
+  app.pushNumber = function(e) {
+    var num = e.target.innerText
+    var input = document.querySelector("paper-input")
+    input.value += num
+  };
+
+    // Push a single number into the calculator display
+  app.math_function = function(e){
+    var operation = e.target.parentNode.operation
+    var num_args = e.target.parentNode.arguments
+  };
+
+  // Configure the calculator using the available operations
+  app.handleAvailableOperations = function(request) {
+    var operations = request.detail.response;
+
+    for (var i = 0; i < operations.length; i++) {
+      var newButton = document.createElement('paper-button');
+      // Remove upper case
+      Polymer.dom(newButton).setAttribute("class", "math-function-button");
+      // Make them pop
+      Polymer.dom(newButton).setAttribute("raised");
+      // Assign event math function
+      newButton.onclick = this.math_function
+      // Set number of arguments
+      newButton.arguments = operations[i].arguments
+      // Set operation
+      newButton.operation = operations[i].operation
+      // Give each button some helper text on hover
+      Polymer.dom(newButton).setAttribute("title", operations[i].description)
+      Polymer.dom(newButton).textContent = operations[i].symbol
+      var displayRow = i%4
+      var currentDiv = document.querySelectorAll(".button-row")[displayRow]
+      Polymer.dom(currentDiv).appendChild(newButton)
+    }
+  };
+
+
 
 })(document);
