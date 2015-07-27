@@ -308,7 +308,11 @@
             len -= (argc - 1);
 
             // Push the returned results, if any, back onto the stack.
-            this.stack.push(new Token(this.op(token.type, lhs, rhs), T_NUMBER));
+            var res = this.op(token.type, lhs, rhs)
+            res.done(function(json){
+                console.log(json)
+                app.result = json.result
+              }).then(this.stack.push(new Token(app.result, T_NUMBER)))
             break;
 
           case T_FUNCTION:
@@ -344,19 +348,19 @@
       if (lhs !== null) {
         switch (type) {
           case T_PLUS:
-            return lhs.value + rhs.value;
+            return $.ajax("http://calctest.iesim.biz/add?op1=" + lhs.value + "&op2=" + rhs.value, {async: false})
 
           case T_MINUS:
-            return lhs.value - rhs.value;
+            return $.ajax("http://calctest.iesim.biz/subtract?op1=" + lhs.value + "&op2=" + rhs.value, {async: false});
 
           case T_TIMES:
-            return lhs.value * rhs.value;
+            return $.ajax("http://calctest.iesim.biz/multiply?op1=" + lhs.value + "&op2=" + rhs.value, {async: false});
 
           case T_DIV:
             if (rhs.value === 0.)
               throw new Error('runtime error: division by zero');
 
-            return lhs.value / rhs.value;
+            return $.ajax("http://calctest.iesim.biz/divide?op1=" + lhs.value + "&op2=" + rhs.value, {async: false});
 
           case T_MOD:
             if (rhs.value === 0.)
@@ -365,7 +369,7 @@
             return lhs.value % rhs.value;
 
           case T_POW:
-            return Math.pow(lhs.value, rhs.value);
+            return $.ajax("http://calctest.iesim.biz/power?op1=" + lhs.value + "&op2=" + rhs.value, {async: false});
         }
 
         // throw?
@@ -383,7 +387,7 @@
           return +rhs.value;
 
         case T_SQRT:
-          return Math.sqrt(rhs.value);
+          return $.ajax("http://calctest.iesim.biz/square_root?op1=" + rhs.value, {async: false});
       }
 
       // throw?
