@@ -104,7 +104,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <section data-route="home">
 
               <paper-material elevation="1">
-              <paper-input disabled ></paper-input>
+              <paper-input disable label=""></paper-input>
                 <div class="button-row">
                   <paper-button on-click="pushNumber" raised>7</paper-button>
                   <paper-button on-click="pushNumber" raised>8</paper-button>
@@ -122,8 +122,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 </div>
                 <div class="button-row">
                   <paper-button on-click="pushNumber" raised>0</paper-button>
-                  <paper-button disabled raised>.</paper-button>
-                  <paper-button disabled raised>=</paper-button>
+                  <paper-button on-click="pushNumber" raised>.</paper-button>
+                  <paper-button on-click="pushEquals" raised>=</paper-button>
+                </div>
+                <div class="button-row">
+                  <paper-button on-click="pushAC" raised>AC</paper-button>
                 </div>
               </paper-material>
 
@@ -150,6 +153,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </template>
 
   <!-- build:js scripts/app.js -->
+  <script src="scripts/jquery.js"></script>
+  <script src="scripts/shunt.js"></script>
   <script src="scripts/app.js"></script>
   <!-- endbuild-->
 </body>

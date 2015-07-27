@@ -31,6 +31,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     // Manually generate the calculator operations request
     document.querySelector("iron-ajax").generateRequest()
+    app.user_input = document.querySelector("paper-input")
   });
 
   // Close drawer after menu item is selected if drawerPanel is narrow
@@ -44,14 +45,57 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // Push a single number into the calculator display
   app.pushNumber = function(e) {
     var num = e.target.innerText
-    var input = document.querySelector("paper-input")
-    input.value += num
+    if (app.reset_next_number) {
+      app.user_input.value = num
+      app.reset_next_number = false
+    } else {
+      app.user_input.value += num
+    }
+  };
+
+  // Push the equals button
+  app.pushEquals = function(e) {
+    var result = app.calculateResult(app.user_input.label + app.user_input.value)
+    app.user_input.value = result
+    app.user_input.label = ""
+    app.reset_next_number = true
+  };
+
+  // Push the equals button
+  app.calculateResult = function(infix_string) {
+    var clean = infix_string.replace(/\s/g, "")
+    console.log(clean)
+    var r = Shunt.parse(clean)
+    return r
+  };
+
+  // Push the all clear "AC" button
+  app.pushAC = function() {
+    app.user_input.label = ""
+    app.user_input.value = ""
   };
 
     // Push a single number into the calculator display
   app.math_function = function(e){
     var operation = e.target.parentNode.operation
     var num_args = e.target.parentNode.arguments
+    if (num_args==0) {
+      $.ajax("http://calctest.iesim.biz/" + operation, {async: false})
+        .done(function(json){
+           app.user_input.value = json.result
+        })
+    } else if (num_args==1) {
+      $.ajax("http://calctest.iesim.biz/" + operation + "&op1=" + app.user_input.value, {async: false})
+        .done(function(json){
+           app.user_input.value = json.result
+        })
+    } else if (app.reset_next_label) {
+      app.user_input.label = app.user_input.value +  + e.target.parentNode.textContent
+    } else {
+      app.user_input.label = app.user_input.label + app.user_input.value + e.target.parentNode.textContent
+    }
+    app.reset_next_number = true
+
   };
 
   // Configure the calculator using the available operations
