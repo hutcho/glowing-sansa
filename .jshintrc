@@ -13,6 +13,13 @@
   "quotmark": "single",
   "undef": true,
   "unused": true,
+  "forin": true,
+  "freeze": true,
+  "nonew": true,
+  "jquery": true,
+  "asi": true,
+  "nonbsp": true,
+  "maxcomplexity": 10,
   "globals": {
     "wrap": true,
     "unwrap": true,

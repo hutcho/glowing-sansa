@@ -69,14 +69,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <!-- Drawer Content -->
         <paper-menu class="list" attr-for-selected="data-route" selected="{{route}}" on-iron-select="onMenuSelect">
-          <a data-route="home" href="/">
+          <a data-route="Calculator" href="/">
             <iron-icon icon="apps"></iron-icon>
             <span>Calculator</span>
           </a>
 
-          <a data-route="extjsapp" href="/extjsapp">
+          <a data-route="ExtJSapp" href="/extjsapp">
             <iron-icon icon="info"></iron-icon>
-            <span>Ext js app</span>
+            <span>Ext JS app</span>
           </a>
 
         </paper-menu>
@@ -92,7 +92,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           <!-- Application name -->
           <div class="middle middle-container center horizontal layout">
-            <div class="app-name">Calculator</div>
+            <div class="app-name">{{route}}</div>
           </div>
 
         </paper-toolbar>
@@ -101,33 +101,35 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="content">
           <iron-pages attr-for-selected="data-route" selected="{{route}}">
 
-            <section data-route="home">
+            <section data-route="Calculator">
+
+              <!-- Keyboard shortcuts -->
+              <iron-a11y-keys target="{{}}" keys="a" on-keys-pressed="app.pushNumber"></iron-a11y-keys>
 
               <paper-material elevation="1">
-              <paper-input disable label=""></paper-input>
-                <div class="button-row">
-                  <paper-button on-click="pushNumber" raised>7</paper-button>
-                  <paper-button on-click="pushNumber" raised>8</paper-button>
-                  <paper-button on-click="pushNumber" raised>9</paper-button>
-                </div>
-                <div class="button-row">
-                  <paper-button on-click="pushNumber" raised>4</paper-button>
-                  <paper-button on-click="pushNumber" raised>5</paper-button>
-                  <paper-button on-click="pushNumber" raised>6</paper-button>
-                </div>
-                <div class="button-row">
-                  <paper-button on-click="pushNumber" raised>1</paper-button>
-                  <paper-button on-click="pushNumber" raised>2</paper-button>
-                  <paper-button on-click="pushNumber" raised>3</paper-button>
-                </div>
-                <div class="button-row">
-                  <paper-button on-click="pushNumber" raised>0</paper-button>
-                  <paper-button on-click="pushNumber" raised>.</paper-button>
-                  <paper-button on-click="pushEquals" raised>=</paper-button>
-                </div>
-                <div class="button-row">
-                  <paper-button on-click="pushAC" raised>AC</paper-button>
-                </div>
+              <paper-input disabled label="" value="0"></paper-input>
+              <div class="button-row">
+                <paper-button on-click="pushNumber" raised>7</paper-button>
+                <paper-button on-click="pushNumber" raised>8</paper-button>
+                <paper-button on-click="pushNumber" raised>9</paper-button>
+                <paper-button on-click="pushNegate" raised>±</paper-button>
+                <paper-button class='ac' on-click="pushAC" raised>AC</paper-button>
+              </div>
+              <div class="button-row">
+                <paper-button on-click="pushNumber" raised>4</paper-button>
+                <paper-button on-click="pushNumber" raised>5</paper-button>
+                <paper-button on-click="pushNumber" raised>6</paper-button>
+              </div>
+              <div class="button-row">
+                <paper-button on-click="pushNumber" raised>1</paper-button>
+                <paper-button on-click="pushNumber" raised>2</paper-button>
+                <paper-button on-click="pushNumber" raised>3</paper-button>
+              </div>
+              <div class="button-row">
+                <paper-button on-click="pushNumber" raised>0</paper-button>
+                <paper-button class="dot" on-click="pushNumber" raised>.</paper-button>
+                <paper-button on-click="pushEquals" raised>=</paper-button>
+              </div>
               </paper-material>
 
               <iron-ajax
@@ -138,10 +140,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             </section>
 
-            <section data-route="extjsapp">
+            <section data-route="ExtJSapp">
               <paper-material elevation="1">
-                <h2 class="paper-font-display2">Maybe later</h2>
-                <p>Yeah, probably later</p>
+                <h2 class="paper-font-display2">Future work*</h2>
+                <p>*possibly</p>
               </paper-material>
             </section>
 

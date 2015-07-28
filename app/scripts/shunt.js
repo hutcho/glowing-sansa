@@ -310,7 +310,6 @@
             // Push the returned results, if any, back onto the stack.
             var res = this.op(token.type, lhs, rhs)
             res.done(function(json){
-                console.log(json)
                 app.result = json.result
               }).then(this.stack.push(new Token(app.result, T_NUMBER)))
             break;
@@ -366,32 +365,32 @@
             if (rhs.value === 0.)
               throw new Error('runtime error: modulo division by zero');
 
-            return lhs.value % rhs.value;
+            return $.when({result:lhs.value % rhs.value});
 
           case T_POW:
             return $.ajax("http://calctest.iesim.biz/power?op1=" + lhs.value + "&op2=" + rhs.value, {async: false});
         }
 
         // throw?
-        return 0.;
+        return $.when(0.);
       }
 
       switch (type) {
         case T_NOT:
-          return !rhs.value;
+          return $.when({result:!rhs.value});
 
         case T_UNARY_MINUS:
-          return -rhs.value;
+          return $.when({result:-rhs.value});
 
         case T_UNARY_PLUS:
-          return +rhs.value;
+          return $.when({result:+rhs.value});
 
         case T_SQRT:
           return $.ajax("http://calctest.iesim.biz/square_root?op1=" + rhs.value, {async: false});
       }
 
       // throw?
-      return 0.;
+      return $.when(0.);
     },
 
     argc: function argc(token) {

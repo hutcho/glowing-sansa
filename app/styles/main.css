@@ -14,7 +14,7 @@ body {
 }
 
 .math-function-button {
-    /* Polymer buttons automatically capitalise button text*/
+    /* Polymer buttons automatically capitalises button text*/
     /* But math functions look better without this, so lets remove it*/
     text-transform: none;
 }
