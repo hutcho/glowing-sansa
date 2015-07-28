@@ -6,6 +6,9 @@ value, however, the API for single argument functions is currently broken,
 since the there is no "Access-Control-Allow-Origin" header present on the
 requested resource.
 
+You must run the calculator from a web server for it to work. This is due to
+HTML imports.
+
 I used https://github.com/droptable/javascript-shunting-yard and modified it
 a bit to use a web service to calculate the result. It's super slow to use,
 but it's meant to be a demonstration of my ability to use web services.
